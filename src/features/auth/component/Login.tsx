@@ -1,13 +1,13 @@
 'use client'
 
+import { Icons } from '@/components/custom/Icons'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
+import { cn } from '@/lib/utils'
 import { useState } from 'react'
 
-import { Icons } from '@/app/_common/component/Icons'
-import { cn } from '@/lib/utils'
 import * as React from 'react'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
 
