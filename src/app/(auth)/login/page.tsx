@@ -1,6 +1,6 @@
+import Login from '@/features/auth/component/Login'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import Login from './_component/Login'
 
 export const metadata: Metadata = {
   title: 'Login Page | PTX Lending App',
