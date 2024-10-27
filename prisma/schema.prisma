@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  schemas   = ["public"]
+  directUrl = env("DIRECT_URL")
+}
+
+model users {
+  id          String     @id @default(uuid())
+  firstName   String     @db.VarChar
+  lastName    String     @db.VarChar
+  birthDate   DateTime?  @db.Date
+  email       String     @unique @db.VarChar
+  password    String     @db.VarChar
+  phoneNumber String?    @db.VarChar
+  address     String?    @db.VarChar
+  status      UserStatus @default(pending)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  loans       loans[]
+  payments    payments[]
+
+  @@schema("public")
+}
+
+model loanTypes {
+  id        String   @id @default(uuid())
+  loan      String   @db.VarChar
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  loans     loans[]
+
+  @@schema("public")
+}
+
+model penalties {
+  id       String      @id @default(uuid())
+  name     String      @db.VarChar
+  interest Decimal     @db.Decimal
+  loanPlan loanPlans[]
+
+  @@schema("public")
+}
+
+model loanPlans {
+  id       String  @id @default(uuid())
+  months   Int     @db.Integer
+  interest Decimal @db.Decimal
+
+  // Relations
+  penaltyId String
+  penalty   penalties @relation(fields: [penaltyId], references: [id])
+  loans     loans[]
+
+  @@schema("public")
+}
+
+model loans {
+  id               String   @id @default(uuid())
+  refCode          String?  @db.VarChar
+  coMaker          String?  @db.VarChar
+  effectiveDate    DateTime @db.Date
+  principalLoan    Decimal  @db.Decimal
+  totalBalance     Decimal  @db.Decimal
+  unearnedInterest Decimal  @db.Decimal
+  penaltyInterest  Decimal? @db.Decimal
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  usersId     String
+  loanTypesId String
+  borrowersId String
+  loanPlanId  String
+  borrower    borrowers  @relation(fields: [borrowersId], references: [id])
+  loanType    loanTypes  @relation(fields: [loanTypesId], references: [id])
+  user        users      @relation(fields: [usersId], references: [id])
+  loanPlan    loanPlans  @relation(fields: [loanPlanId], references: [id])
+  payments    payments[]
+
+  @@schema("public")
+}
+
+model borrowers {
+  id          String         @id @default(uuid())
+  firstName   String         @db.VarChar
+  lastName    String         @db.VarChar
+  address     String         @db.VarChar
+  email       String?        @db.VarChar
+  phoneNumber String?        @db.VarChar
+  status      BorrowerStatus @default(active)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  loans loans[]
+
+  @@schema("public")
+}
+
+model payments {
+  id        String   @id @default(uuid())
+  refCode   String   @db.VarChar
+  datePay   DateTime @db.Date
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  loanId  String
+  usersId String
+  loan    loans  @relation(fields: [loanId], references: [id])
+  user    users  @relation(fields: [usersId], references: [id])
+
+  @@schema("public")
+}
+
+enum BorrowerStatus {
+  active
+  inactive
+  ban
+
+  @@schema("public")
+}
+
+enum UserStatus {
+  active
+  inactive
+  ban
+  pending
+  approve
+  rejected
+
+  @@schema("public")
+}
+
+enum UserType {
+  admin
+  user
+
+  @@schema("public")
+}
