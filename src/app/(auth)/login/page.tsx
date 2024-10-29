@@ -1,4 +1,4 @@
-import Login from '@/features/auth/component/Login'
+import Login from '@/src/features/auth/component/Login'
 import { Metadata } from 'next'
 import Link from 'next/link'
 

@@ -1,12 +1,12 @@
-"use client"
+'use client'
 
-import { ChevronRight, type LucideIcon } from "lucide-react"
+import { ChevronRight, type LucideIcon } from 'lucide-react'
 
 import {
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible"
+  CollapsibleTrigger
+} from '@/src/components/ui/collapsible'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -16,11 +16,11 @@ import {
   SidebarMenuItem,
   SidebarMenuSub,
   SidebarMenuSubButton,
-  SidebarMenuSubItem,
-} from "@/components/ui/sidebar"
+  SidebarMenuSubItem
+} from '@/src/components/ui/sidebar'
 
 export function NavMain({
-  items,
+  items
 }: {
   items: {
     title: string
@@ -49,9 +49,9 @@ export function NavMain({
               {item.items?.length ? (
                 <>
                   <CollapsibleTrigger asChild>
-                    <SidebarMenuAction className="data-[state=open]:rotate-90">
+                    <SidebarMenuAction className='data-[state=open]:rotate-90'>
                       <ChevronRight />
-                      <span className="sr-only">Toggle</span>
+                      <span className='sr-only'>Toggle</span>
                     </SidebarMenuAction>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
