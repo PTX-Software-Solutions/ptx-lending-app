@@ -1,34 +1,34 @@
 'use client'
 
-import { Icons } from '@/src/components/custom/Icons'
 import { Button } from '@/src/components/ui/button'
 import { Input } from '@/src/components/ui/input'
 import { Label } from '@/src/components/ui/label'
 import { cn } from '@/src/lib/utils'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import * as React from 'react'
 import { loginSchema, LoginType } from '../utils/loginSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { FormDescription } from '@/components/ui/form'
+import { Form, FormField, FormDescription } from '@/components/ui/form'
+import { useToast } from '@/hooks/use-toast'
+import { LoaderIcon } from 'lucide-react'
 
-type UserAuthFormProps = React.HTMLAttributes<HTMLDivElement>
-
-export default function Login({ className, ...props }: UserAuthFormProps) {
+export default function Login() {
   const router = useRouter()
-  const {
-    control,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<LoginType>({
+  const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
-    mode: 'onChange'
+    mode: 'onChange',
+    defaultValues: {
+      email: '',
+      password: ''
+    }
   })
 
   const [isLoading, setIsLoading] = useState<boolean>(false)
+  const { toast } = useToast()
 
   const onSubmit: SubmitHandler<LoginType> = async (data: LoginType) => {
     try {
@@ -39,14 +39,17 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
         redirect: false
       })
 
-      if (response?.error) {
-        console.error(`error: ${response.error}`)
+      if (!response?.ok) {
         router.push('/login')
+        toast({
+          duration: 3000,
+          title: 'Invalid credentials has been used',
+          variant: 'destructive'
+        })
+        return
       }
 
-      if (!response?.ok) {
-        throw new Error('Network response was not ok')
-      }
+      router.push('/')
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Something went wrong'
@@ -58,68 +61,68 @@ export default function Login({ className, ...props }: UserAuthFormProps) {
   }
 
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='grid gap-2'>
-          <div className='grid gap-1'>
-            <Label htmlFor='email'>Email</Label>
-            <Controller
-              control={control}
-              name='email'
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Input
-                    id='email'
-                    placeholder='name@example.com'
-                    type='email'
-                    autoCapitalize='none'
-                    autoComplete='email'
-                    autoCorrect='off'
-                    onChange={(e) => onChange(e)}
-                    value={value}
-                    disabled={isLoading}
-                  />
-                  {errors.email?.message && (
-                    <FormDescription>{errors.email?.message}</FormDescription>
-                  )}
-                </>
-              )}
-            />
+    <div className={cn('grid gap-6')}>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className='grid gap-2'>
+            <div className='grid gap-2'>
+              <Label htmlFor='email'>Email</Label>
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <>
+                    <Input
+                      id='email'
+                      placeholder='name@example.com'
+                      type='text'
+                      autoCapitalize='none'
+                      autoComplete='email'
+                      autoCorrect='off'
+                      {...field}
+                      disabled={isLoading}
+                    />
+                    {form.formState.errors?.email?.message && (
+                      <small className={'text-red-500'}>
+                        {form.formState.errors.email?.message}
+                      </small>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+            <div className='grid gap-2'>
+              <Label htmlFor='password'>Password</Label>
+              <FormField
+                control={form.control}
+                name='password'
+                render={({ field }) => (
+                  <>
+                    <Input
+                      id='password'
+                      type='password'
+                      autoCapitalize='none'
+                      autoComplete='password'
+                      autoCorrect='off'
+                      {...field}
+                      disabled={isLoading}
+                    />
+                    {form.formState.errors?.password?.message && (
+                      <FormDescription>
+                        {form.formState.errors.password?.message}
+                      </FormDescription>
+                    )}
+                  </>
+                )}
+              />
+            </div>
+            <Button disabled={isLoading}>
+              {isLoading && <LoaderIcon className='animate-spin' />}
+              Sign In
+            </Button>
           </div>
-          <div className='grid gap-1'>
-            <Label htmlFor='password'>Password</Label>
-            <Controller
-              control={control}
-              name='password'
-              render={({ field: { onChange, value } }) => (
-                <>
-                  <Input
-                    id='password'
-                    type='password'
-                    autoCapitalize='none'
-                    autoComplete='password'
-                    autoCorrect='off'
-                    onChange={(e) => onChange(e)}
-                    value={value}
-                    disabled={isLoading}
-                  />
-                  {errors.password?.message && (
-                    <FormDescription>
-                      {errors.password?.message}
-                    </FormDescription>
-                  )}
-                </>
-              )}
-            />
-          </div>
-          <Button disabled={isLoading}>
-            {isLoading && (
-              <Icons.spinner className='mr-2 h-4 w-4 animate-spin' />
-            )}
-            Sign In
-          </Button>
-        </div>
-      </form>
+        </form>
+      </Form>
     </div>
   )
 }

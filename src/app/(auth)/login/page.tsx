@@ -13,7 +13,7 @@ export default function Page() {
       <div className='container relative h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none md:grid-cols-2 lg:px-0 sm:grid sm:place-items-center xs:grid xs:place-items-center'>
         <div className='relative hidden h-full w-full flex-col bg-muted p-10 text-white dark:border-r lg:flex md:flex xs:flex'>
           <div className='absolute inset-0 bg-zinc-900' />
-          <div className='relative z-20 flex items-center text-lg font-medium'>
+          <div className='relative flex items-center text-lg font-medium'>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
