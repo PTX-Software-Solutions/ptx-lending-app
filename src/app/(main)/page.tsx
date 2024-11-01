@@ -1,16 +1,21 @@
-import { Button } from '@/components/ui/button'
+import { Button } from '@/src/components/ui/button'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
-import { SidebarInset } from '@/components/ui/sidebar'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { MainNav } from '@/features/dashboard/component/MainNav'
-import { Search } from '@/features/dashboard/component/Search'
-import { UserNav } from '@/features/dashboard/component/UserNav'
+} from '@/src/components/ui/card'
+import { SidebarInset } from '@/src/components/ui/sidebar'
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
+} from '@/src/components/ui/tabs'
+import { MainNav } from '@/src/features/dashboard/component/MainNav'
+import { Search } from '@/src/features/dashboard/component/Search'
+import { UserNav } from '@/src/features/dashboard/component/UserNav'
 import { Metadata } from 'next'
 import Image from 'next/image'
 

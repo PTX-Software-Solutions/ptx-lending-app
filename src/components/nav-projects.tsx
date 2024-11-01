@@ -1,20 +1,20 @@
-"use client"
+'use client'
 
 import {
   Folder,
   MoreHorizontal,
   Share,
   Trash2,
-  type LucideIcon,
-} from "lucide-react"
+  type LucideIcon
+} from 'lucide-react'
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+  DropdownMenuTrigger
+} from '@/src/components/ui/dropdown-menu'
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -22,11 +22,11 @@ import {
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar"
+  useSidebar
+} from '@/src/components/ui/sidebar'
 
 export function NavProjects({
-  projects,
+  projects
 }: {
   projects: {
     name: string
@@ -37,7 +37,7 @@ export function NavProjects({
   const { isMobile } = useSidebar()
 
   return (
-    <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+    <SidebarGroup className='group-data-[collapsible=icon]:hidden'>
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
       <SidebarMenu>
         {projects.map((item) => (
@@ -52,25 +52,25 @@ export function NavProjects({
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover>
                   <MoreHorizontal />
-                  <span className="sr-only">More</span>
+                  <span className='sr-only'>More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
               <DropdownMenuContent
-                className="w-48"
-                side={isMobile ? "bottom" : "right"}
-                align={isMobile ? "end" : "start"}
+                className='w-48'
+                side={isMobile ? 'bottom' : 'right'}
+                align={isMobile ? 'end' : 'start'}
               >
                 <DropdownMenuItem>
-                  <Folder className="text-neutral-500 dark:text-neutral-400" />
+                  <Folder className='text-neutral-500 dark:text-neutral-400' />
                   <span>View Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Share className="text-neutral-500 dark:text-neutral-400" />
+                  <Share className='text-neutral-500 dark:text-neutral-400' />
                   <span>Share Project</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <Trash2 className="text-neutral-500 dark:text-neutral-400" />
+                  <Trash2 className='text-neutral-500 dark:text-neutral-400' />
                   <span>Delete Project</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
