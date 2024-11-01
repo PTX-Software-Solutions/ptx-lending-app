@@ -12,7 +12,7 @@ import * as React from 'react'
 import { loginSchema, LoginType } from '../utils/loginSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
-import { Form, FormField, FormDescription } from '@/components/ui/form'
+import { Form, FormField, FormDescription } from '@/src/components/ui/form'
 import { LoaderIcon } from 'lucide-react'
 import { Bounce, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
@@ -41,9 +41,9 @@ export default function Login() {
 
       if (!response?.ok) {
         router.push('/login')
-        toast('❌ Invalid credentials used!', {
+        toast.error('Invalid credentials used!', {
           position: 'top-right',
-          autoClose: 5000,
+          autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
