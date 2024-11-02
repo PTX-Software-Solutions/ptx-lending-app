@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle
 } from '@/src/components/ui/card'
-import { SidebarInset } from '@/src/components/ui/sidebar'
 import {
   Tabs,
   TabsContent,
@@ -26,7 +25,7 @@ export const metadata: Metadata = {
 
 export default function Home() {
   return (
-    <SidebarInset>
+    <>
       <div className='md:hidden'>
         <Image
           src='/examples/dashboard-light.png'
@@ -199,6 +198,6 @@ export default function Home() {
           </Tabs>
         </div>
       </div>
-    </SidebarInset>
+    </>
   )
 }
