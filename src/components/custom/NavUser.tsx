@@ -24,6 +24,8 @@ import {
   DropdownMenuTrigger
 } from '../ui/dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar'
+import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export function NavUser({
   user
@@ -35,6 +37,12 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const router = useRouter()
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false })
+    router.replace('/login')
+  }
 
   return (
     <SidebarMenu>
@@ -97,7 +105,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleSignOut}>
               <LogOut />
               Log out
             </DropdownMenuItem>
