@@ -1,13 +1,21 @@
 import Login from '@/src/features/auth/component/Login'
 import { Metadata } from 'next'
+import { getServerSession } from 'next-auth'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Login Page | PTX Lending App',
   description: 'Login Page | PTX Lending App'
 }
 
-export default function Page() {
+export default async function Page() {
+  const session = await getServerSession()
+
+  if (session) {
+    redirect('/')
+  }
+
   return (
     <>
       <div className='container relative h-[100vh] flex-col items-center justify-center md:grid lg:max-w-none md:grid-cols-2 lg:px-0 sm:grid sm:place-items-center xs:grid xs:place-items-center'>
