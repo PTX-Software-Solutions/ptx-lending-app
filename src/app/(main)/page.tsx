@@ -12,8 +12,6 @@ import {
   TabsList,
   TabsTrigger
 } from '@/src/components/ui/tabs'
-import { MainNav } from '@/src/features/dashboard/component/MainNav'
-import { Search } from '@/src/features/dashboard/component/Search'
 import { UserNav } from '@/src/features/dashboard/component/UserNav'
 import { Metadata } from 'next'
 import Image from 'next/image'
@@ -45,9 +43,7 @@ export default function Home() {
       <div className='hidden flex-col md:flex'>
         <div className='border-b'>
           <div className='flex h-16 items-center px-4'>
-            <MainNav className='mx-6' />
             <div className='ml-auto flex items-center space-x-4'>
-              <Search />
               <UserNav />
             </div>
           </div>
