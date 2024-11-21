@@ -1,3 +1,5 @@
+import LoanTable from '@/src/features/loan/component/LoanTable'
+
 export default function Page() {
-  return <div>Welcome to loan page</div>
+  return <LoanTable />
 }

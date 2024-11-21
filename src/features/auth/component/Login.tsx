@@ -40,7 +40,7 @@ export default function Login() {
       })
 
       if (!response?.ok) {
-        router.push('/login')
+        router.replace('/login')
         toast.error('Invalid credentials used!', {
           position: 'top-right',
           autoClose: 3000,
@@ -55,7 +55,7 @@ export default function Login() {
         return
       }
 
-      router.push('/')
+      router.replace('/')
     } catch (error) {
       const errorMessage =
         error instanceof Error ? error.message : 'Something went wrong'

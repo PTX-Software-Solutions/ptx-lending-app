@@ -9,7 +9,7 @@ import {
   Sparkles
 } from 'lucide-react'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/src/components/ui/avatar'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,13 +18,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '@/src/components/ui/dropdown-menu'
+} from '@/components/ui/dropdown-menu'
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar
-} from '@/src/components/ui/sidebar'
+} from '@/components/ui/sidebar'
+import { signOut } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export function NavUser({
   user
@@ -36,6 +38,12 @@ export function NavUser({
   }
 }) {
   const { isMobile } = useSidebar()
+  const router = useRouter()
+
+  const handleLogout = () => {
+    signOut()
+    router.replace('/login')
+  }
 
   return (
     <SidebarMenu>
@@ -98,7 +106,7 @@ export function NavUser({
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={handleLogout}>
               <LogOut />
               Log out
             </DropdownMenuItem>

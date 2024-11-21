@@ -1,7 +1,7 @@
 import Login from '@/src/features/auth/component/Login'
+import LoginAgreement from '@/src/features/auth/component/LoginAgreement'
 import { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
-import Link from 'next/link'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {
@@ -43,23 +43,7 @@ export default async function Page() {
               <h1 className='text-2xl font-semibold tracking-tight'>Login</h1>
             </div>
             <Login />
-            <p className='px-8 text-center text-sm text-muted-foreground'>
-              By continuing, you agree to our{' '}
-              <Link
-                href='/terms'
-                className='underline underline-offset-4 hover:text-primary'
-              >
-                Terms of Service
-              </Link>{' '}
-              and{' '}
-              <Link
-                href='/privacy'
-                className='underline underline-offset-4 hover:text-primary'
-              >
-                Privacy Policy
-              </Link>
-              .
-            </p>
+            <LoginAgreement />
           </div>
         </div>
       </div>
